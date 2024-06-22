@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'auth/firebase_auth/firebase_user_provider.dart';
-import 'auth/firebase_auth/auth_util.dart';
-
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'package:flutter/foundation.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'flutter_flow/firebase_app_check_util.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
@@ -20,6 +19,12 @@ void main() async {
   await initFirebase();
 
   await FlutterFlowTheme.initialize();
+
+  if (!kIsWeb) {
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  }
+  await initializeFirebaseRemoteConfig();
+  await initializeFirebaseAppCheck();
 
   runApp(MyApp());
 }
@@ -39,23 +44,12 @@ class _MyAppState extends State<MyApp> {
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
 
-  late Stream<BaseAuthUser> userStream;
-
   @override
   void initState() {
     super.initState();
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = learningProjectFirebaseUserStream()
-      ..listen((user) {
-        _appStateNotifier.update(user);
-      });
-    jwtTokenStream.listen((_) {});
-    Future.delayed(
-      Duration(milliseconds: 1000),
-      () => _appStateNotifier.stopShowingSplashImage(),
-    );
   }
 
   void setThemeMode(ThemeMode mode) => setState(() {
