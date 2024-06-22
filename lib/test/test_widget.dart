@@ -2,6 +2,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,7 +32,7 @@ class _TestWidgetState extends State<TestWidget> {
     super.initState();
     _model = createModel(context, () => TestModel());
 
-    _model.textController ??= TextEditingController();
+    _model.textController ??= TextEditingController(text: 'test');
     _model.textFieldFocusNode ??= FocusNode();
   }
 
@@ -131,15 +132,34 @@ class _TestWidgetState extends State<TestWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    var usersRecordReference = UsersRecord.collection.doc();
-                    await usersRecordReference.set(createUsersRecordData(
-                      name: _model.textController.text,
-                    ));
-                    _model.returnValue = UsersRecord.getDocumentFromData(
-                        createUsersRecordData(
-                          name: _model.textController.text,
+                    _model.isConnection = await actions.checkNetwork();
+                    if (_model.isConnection!) {
+                      var usersRecordReference = UsersRecord.collection.doc();
+                      await usersRecordReference.set(createUsersRecordData(
+                        name: widget.test,
+                      ));
+                      _model.returnValue = UsersRecord.getDocumentFromData(
+                          createUsersRecordData(
+                            name: widget.test,
+                          ),
+                          usersRecordReference);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'No Internet Connection!!!',
+                            style: GoogleFonts.getFont(
+                              'Roboto',
+                              color: FlutterFlowTheme.of(context).info,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          duration: Duration(milliseconds: 2000),
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryText,
                         ),
-                        usersRecordReference);
+                      );
+                    }
 
                     setState(() {});
                   },
@@ -168,7 +188,10 @@ class _TestWidgetState extends State<TestWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 23.0, 0.0, 0.0),
                 child: Text(
-                  _model.returnValue!.reference.id,
+                  valueOrDefault<String>(
+                    _model.returnValue?.reference.id,
+                    'Get Doc Property Document ID',
+                  ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
                         letterSpacing: 0.0,
@@ -176,16 +199,9 @@ class _TestWidgetState extends State<TestWidget> {
                 ),
               ),
               Text(
-                (_model.returnValue != null).toString(),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Readex Pro',
-                      letterSpacing: 0.0,
-                    ),
-              ),
-              Text(
                 valueOrDefault<String>(
-                  _model.returnValue?.name,
-                  'unknown',
+                  (_model.returnValue != null).toString(),
+                  'Get Doc Property Document Exists',
                 ),
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Readex Pro',
@@ -195,7 +211,7 @@ class _TestWidgetState extends State<TestWidget> {
               Text(
                 valueOrDefault<String>(
                   _model.returnValue?.name,
-                  'xyz',
+                  'Get Doc Property Collection Field Name',
                 ),
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Readex Pro',
@@ -205,7 +221,7 @@ class _TestWidgetState extends State<TestWidget> {
               Text(
                 valueOrDefault<String>(
                   _model.returnValue?.hasName()?.toString(),
-                  'field not set',
+                  'Check Field using Has Field',
                 ),
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Readex Pro',
