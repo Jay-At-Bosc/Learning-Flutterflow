@@ -21,8 +21,14 @@ class UsersRecord extends FirestoreRecord {
   String get name => _name ?? '';
   bool hasName() => _name != null;
 
+  // "age" field.
+  int? _age;
+  int get age => _age ?? 0;
+  bool hasAge() => _age != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
+    _age = castToType<int>(snapshotData['age']);
   }
 
   static CollectionReference get collection =>
@@ -60,10 +66,12 @@ class UsersRecord extends FirestoreRecord {
 
 Map<String, dynamic> createUsersRecordData({
   String? name,
+  int? age,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'name': name,
+      'age': age,
     }.withoutNulls,
   );
 
@@ -75,11 +83,11 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
-    return e1?.name == e2?.name;
+    return e1?.name == e2?.name && e1?.age == e2?.age;
   }
 
   @override
-  int hash(UsersRecord? e) => const ListEquality().hash([e?.name]);
+  int hash(UsersRecord? e) => const ListEquality().hash([e?.name, e?.age]);
 
   @override
   bool isValidKey(Object? o) => o is UsersRecord;

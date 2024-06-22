@@ -10,20 +10,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class TestModel extends FlutterFlowModel<TestWidget> {
-  ///  Local state fields for this page.
-
-  String textfieldValue = 'test';
-
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
-  // Stores action output result for [Custom Action - checkNetwork] action in Button widget.
+  // State field(s) for name widget.
+  FocusNode? nameFocusNode;
+  TextEditingController? nameTextController;
+  String? Function(BuildContext, String?)? nameTextControllerValidator;
+  // State field(s) for age widget.
+  FocusNode? ageFocusNode;
+  TextEditingController? ageTextController;
+  String? Function(BuildContext, String?)? ageTextControllerValidator;
+  // Stores action output result for [Custom Action - checkNetwork] action in fbbutton widget.
   bool? isConnection;
-  // Stores action output result for [Backend Call - Create Document] action in Button widget.
+  // Stores action output result for [Backend Call - Create Document] action in fbbutton widget.
   UsersRecord? returnValue;
 
   @override
@@ -32,7 +32,10 @@ class TestModel extends FlutterFlowModel<TestWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    textFieldFocusNode?.dispose();
-    textController?.dispose();
+    nameFocusNode?.dispose();
+    nameTextController?.dispose();
+
+    ageFocusNode?.dispose();
+    ageTextController?.dispose();
   }
 }

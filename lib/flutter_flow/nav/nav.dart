@@ -47,12 +47,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'test',
           path: '/test',
-          builder: (context, params) => TestWidget(
-            test: params.getParam(
-              'test',
-              ParamType.String,
-            ),
-          ),
+          builder: (context, params) => TestWidget(),
         ),
         FFRoute(
           name: 'login',

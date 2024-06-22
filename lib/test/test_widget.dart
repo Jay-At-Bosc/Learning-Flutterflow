@@ -11,12 +11,7 @@ import 'test_model.dart';
 export 'test_model.dart';
 
 class TestWidget extends StatefulWidget {
-  const TestWidget({
-    super.key,
-    this.test,
-  });
-
-  final String? test;
+  const TestWidget({super.key});
 
   @override
   State<TestWidget> createState() => _TestWidgetState();
@@ -32,8 +27,11 @@ class _TestWidgetState extends State<TestWidget> {
     super.initState();
     _model = createModel(context, () => TestModel());
 
-    _model.textController ??= TextEditingController(text: 'test');
-    _model.textFieldFocusNode ??= FocusNode();
+    _model.nameTextController ??= TextEditingController(text: ' ');
+    _model.nameFocusNode ??= FocusNode();
+
+    _model.ageTextController ??= TextEditingController(text: ' ');
+    _model.ageFocusNode ??= FocusNode();
   }
 
   @override
@@ -76,11 +74,12 @@ class _TestWidgetState extends State<TestWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(8.0, 20.0, 8.0, 0.0),
                 child: TextFormField(
-                  controller: _model.textController,
-                  focusNode: _model.textFieldFocusNode,
+                  controller: _model.nameTextController,
+                  focusNode: _model.nameFocusNode,
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
+                    labelText: 'name',
                     labelStyle:
                         FlutterFlowTheme.of(context).labelMedium.override(
                               fontFamily: 'Readex Pro',
@@ -91,28 +90,28 @@ class _TestWidgetState extends State<TestWidget> {
                               fontFamily: 'Readex Pro',
                               letterSpacing: 0.0,
                             ),
-                    enabledBorder: UnderlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: FlutterFlowTheme.of(context).alternate,
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    focusedBorder: UnderlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: FlutterFlowTheme.of(context).primary,
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    errorBorder: UnderlineInputBorder(
+                    errorBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: FlutterFlowTheme.of(context).error,
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    focusedErrorBorder: UnderlineInputBorder(
+                    focusedErrorBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: FlutterFlowTheme.of(context).error,
                         width: 2.0,
@@ -125,65 +124,133 @@ class _TestWidgetState extends State<TestWidget> {
                         letterSpacing: 0.0,
                       ),
                   validator:
-                      _model.textControllerValidator.asValidator(context),
+                      _model.nameTextControllerValidator.asValidator(context),
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    _model.isConnection = await actions.checkNetwork();
-                    if (_model.isConnection!) {
-                      var usersRecordReference = UsersRecord.collection.doc();
-                      await usersRecordReference.set(createUsersRecordData(
-                        name: widget.test,
-                      ));
-                      _model.returnValue = UsersRecord.getDocumentFromData(
-                          createUsersRecordData(
-                            name: widget.test,
-                          ),
-                          usersRecordReference);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'No Internet Connection!!!',
-                            style: GoogleFonts.getFont(
-                              'Roboto',
-                              color: FlutterFlowTheme.of(context).info,
-                              fontSize: 16.0,
+                padding: EdgeInsetsDirectional.fromSTEB(8.0, 20.0, 8.0, 0.0),
+                child: TextFormField(
+                  controller: _model.ageTextController,
+                  focusNode: _model.ageFocusNode,
+                  autofocus: true,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    labelText: 'age',
+                    labelStyle:
+                        FlutterFlowTheme.of(context).labelMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
                             ),
-                          ),
-                          duration: Duration(milliseconds: 2000),
-                          backgroundColor:
-                              FlutterFlowTheme.of(context).primaryText,
-                        ),
-                      );
-                    }
-
-                    setState(() {});
-                  },
-                  text: 'create',
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Readex Pro',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                    hintStyle:
+                        FlutterFlowTheme.of(context).labelMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    borderRadius: BorderRadius.circular(8.0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).primary,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).error,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).error,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Readex Pro',
+                        letterSpacing: 0.0,
+                      ),
+                  validator:
+                      _model.ageTextControllerValidator.asValidator(context),
                 ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        _model.isConnection = await actions.checkNetwork();
+                        if (_model.isConnection!) {
+                          var usersRecordReference =
+                              UsersRecord.collection.doc();
+                          await usersRecordReference.set(createUsersRecordData(
+                            name: _model.nameTextController.text,
+                            age: int.tryParse(_model.ageTextController.text),
+                          ));
+                          _model.returnValue = UsersRecord.getDocumentFromData(
+                              createUsersRecordData(
+                                name: _model.nameTextController.text,
+                                age:
+                                    int.tryParse(_model.ageTextController.text),
+                              ),
+                              usersRecordReference);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'No Internet Connection!!!',
+                                style: GoogleFonts.getFont(
+                                  'Roboto',
+                                  color: FlutterFlowTheme.of(context).info,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              duration: Duration(milliseconds: 2000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                            ),
+                          );
+                        }
+
+                        setState(() {});
+                      },
+                      text: 'create with fb ',
+                      options: FFButtonOptions(
+                        height: 40.0,
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            24.0, 0.0, 24.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                        elevation: 3.0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 23.0, 0.0, 0.0),
