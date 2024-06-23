@@ -1,8 +1,8 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/custom_code/actions/index.dart' as actions;
 import 'test_widget.dart' show TestWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
@@ -23,10 +23,6 @@ class TestModel extends FlutterFlowModel<TestWidget> {
   FocusNode? ageFocusNode;
   TextEditingController? ageTextController;
   String? Function(BuildContext, String?)? ageTextControllerValidator;
-  // Stores action output result for [Custom Action - checkNetwork] action in fbbutton widget.
-  bool? isConnection;
-  // Stores action output result for [Backend Call - Create Document] action in fbbutton widget.
-  UsersRecord? returnValue;
   // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
   UsersRecord? userData;
 

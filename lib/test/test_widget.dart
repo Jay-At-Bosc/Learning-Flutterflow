@@ -1,8 +1,8 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -196,87 +196,7 @@ class _TestWidgetState extends State<TestWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                       child: FFButtonWidget(
-                        onPressed: () async {
-                          var _shouldSetState = false;
-                          _model.isConnection = await actions.checkNetwork();
-                          _shouldSetState = true;
-                          if (_model.isConnection!) {
-                            var usersRecordReference =
-                                UsersRecord.collection.doc();
-                            await usersRecordReference
-                                .set(createUsersRecordData(
-                              name: _model.nameTextController.text,
-                              age: int.tryParse(_model.ageTextController.text),
-                            ));
-                            _model.returnValue =
-                                UsersRecord.getDocumentFromData(
-                                    createUsersRecordData(
-                                      name: _model.nameTextController.text,
-                                      age: int.tryParse(
-                                          _model.ageTextController.text),
-                                    ),
-                                    usersRecordReference);
-                            _shouldSetState = true;
-                            if (_model.returnValue != null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'data submitted',
-                                    style: GoogleFonts.getFont(
-                                      'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).info,
-                                ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Error',
-                                    style: GoogleFonts.getFont(
-                                      'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).tertiary,
-                                ),
-                              );
-                            }
-
-                            if (_shouldSetState) setState(() {});
-                            return;
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'No Internet Connection!!!',
-                                  style: GoogleFonts.getFont(
-                                    'Roboto',
-                                    color: FlutterFlowTheme.of(context).info,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                                duration: Duration(milliseconds: 2000),
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).primaryText,
-                              ),
-                            );
-                            if (_shouldSetState) setState(() {});
-                            return;
-                          }
-
-                          if (_shouldSetState) setState(() {});
-                        },
+                        onPressed: () async {},
                         text: 'Create',
                         options: FFButtonOptions(
                           height: 40.0,
@@ -301,49 +221,6 @@ class _TestWidgetState extends State<TestWidget> {
                       ),
                     ),
                   ],
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 23.0, 0.0, 0.0),
-                  child: Text(
-                    valueOrDefault<String>(
-                      _model.returnValue?.reference.id,
-                      'Get Doc Property Document ID',
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                ),
-                Text(
-                  valueOrDefault<String>(
-                    (_model.returnValue != null).toString(),
-                    'Get Doc Property Document Exists',
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Readex Pro',
-                        letterSpacing: 0.0,
-                      ),
-                ),
-                Text(
-                  valueOrDefault<String>(
-                    _model.returnValue?.name,
-                    'Get Doc Property Collection Field Name',
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Readex Pro',
-                        letterSpacing: 0.0,
-                      ),
-                ),
-                Text(
-                  valueOrDefault<String>(
-                    _model.returnValue?.hasName()?.toString(),
-                    'Check Field using Has Field',
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Readex Pro',
-                        letterSpacing: 0.0,
-                      ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
