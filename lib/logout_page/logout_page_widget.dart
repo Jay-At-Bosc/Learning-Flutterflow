@@ -1,7 +1,9 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +37,8 @@ class _LogoutPageWidgetState extends State<LogoutPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -137,6 +141,7 @@ class _LogoutPageWidgetState extends State<LogoutPageWidget> {
                   currentJwtToken,
                   'jwt token',
                 ),
+                maxLines: 1,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Readex Pro',
                       letterSpacing: 0.0,
@@ -153,6 +158,49 @@ class _LogoutPageWidgetState extends State<LogoutPageWidget> {
                         letterSpacing: 0.0,
                       ),
                 ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(40.0, 0.0, 40.0, 0.0),
+                child: FFButtonWidget(
+                  onPressed: () async {
+                    await currentUserReference!.update(createUsersRecordData(
+                      displayName: 'Ram',
+                      name: 'edited by jay',
+                    ));
+                    FFAppState().userRef = valueOrDefault<String>(
+                      currentUserReference?.id,
+                      'unknown',
+                    );
+                    setState(() {});
+                  },
+                  text: 'update data',
+                  options: FFButtonOptions(
+                    height: 40.0,
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                    iconPadding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: FlutterFlowTheme.of(context).primary,
+                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          fontFamily: 'Readex Pro',
+                          color: Colors.white,
+                          letterSpacing: 0.0,
+                        ),
+                    elevation: 3.0,
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+              Text(
+                FFAppState().userRef,
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Readex Pro',
+                      letterSpacing: 0.0,
+                    ),
               ),
             ].divide(SizedBox(height: 20.0)),
           ),
