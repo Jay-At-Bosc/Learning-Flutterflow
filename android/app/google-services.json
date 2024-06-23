@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "48682533418",
+    "project_id": "learning-flutterflow-8c9fb",
+    "storage_bucket": "learning-flutterflow-8c9fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48682533418:android:7703b71d65277f4f2e7953",
+        "android_client_info": {
+          "package_name": "com.mycompany.learningproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8XVZUTLgCb33Y4tNT2F7nvKRPPCpGVx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
